@@ -1,0 +1,58 @@
+{
+    "mcpServers": {
+        "jetbrains": {
+            "env": {
+                "IDE_PORT": "58682"  
+            },
+            "command": "npx",
+            "args": [
+                "-y",
+                "@jetbrains/mcp-proxy"
+            ]
+        },
+        "github": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "-e",
+                "GITHUB_PERSONAL_ACCESS_TOKEN",
+                "ghcr.io/github/github-mcp-server"
+            ],
+            "env": {
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "<<YOUR TOKEN>>"
+            }
+        },
+        "fetch": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "mcp/fetch"
+            ]
+        },
+        "git": {
+            "command": "wsl.exe",
+            "args": [
+                "bash",
+                "-c",
+                "/home/bcdennis/.local/bin/uvx mcp-server-git --repository ~/sites/rebar"
+            ]
+        },
+        "filesystem": {
+            "command": "wsl.exe",
+            "args": [
+                "docker",
+                "run",
+                "-i",
+                "--rm",
+                "--mount",
+                "type=bind,src=/home/bcdennis/sites/rebar,dst=/sites/rebar",
+                "mcp/filesystem",
+                "/sites/rebar"
+            ]
+        }
+    }
+}
